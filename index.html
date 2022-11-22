@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <meta name ="viewport" content ="initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=no"/>
+  <title>Sic Bo Dice Gambling</title>
+  <script src="app.js"></script>
+  <link rel="stylesheet" href="../app/css/app.css">
+  <link rel="stylesheet" href="../app/css/dice.css">
+</head>
+
+<body>
+  <div id="progress" class="progress fixed-top d-none">
+    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+  <div id="message" class="alert alert-dismissible d-none" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <div></div>
+  </div>
+  <div id="app" class="container">
+      
+    <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="nav-bet-tab" data-toggle="tab" href="#nav-bet" role="tab" aria-controls="nav-bet" aria-expanded="true">Bet</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" data-toggle="modal" data-target="#modal-contracts">Contracts</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="nav-invest-tab" data-toggle="tab" href="#nav-invest" role="tab" aria-controls="nav-invest">Invest</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="nav-whitepaper-tab" href="#nav-whitepaper" role="tab" data-toggle="tab" aria-controls="nav-whitepaper">About</a>
+      </li>
+      <!-- <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+          Help
+        </a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" id="nav-gamber-guide-tab" href="#nav-gamber-guide" role="tab" data-toggle="tab" aria-controls="nav-gamber-guide">Gamber Guide</a>
+          <a class="dropdown-item" id="nav-dealer-guide-tab" href="#nav-dealer-guide" role="tab" data-toggle="tab" aria-controls="nav-dealer-guide">Dealer Guide</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" id="nav-whitepaper-tab" href="#nav-whitepaper" role="tab" data-toggle="tab" aria-controls="nav-whitepaper">White Paper</a>
+        </div>
+      </li> -->
+    </ul>
+    <div class="tab-content" style="margin-top:10px;" id="myTabContent">
+      <!-- tab bet -->
+      <div class="tab-pane fade show active" id="nav-bet" role="tabpanel" aria-labelledby="nav-bet-tab">
+        <div class="card-deck">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">
+                <span class="total-rounds">0</span>
+              </h4>
+              <p class="card-text">
+                <span class="text-muted">Total Rounds</span>
+              </p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">
+                <span class="dealer-interests">0.00</span>
+              </h4>
+              <p class="card-text">
+                <span class="text-muted">Total Pool</span>
+              </p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">
+                <span class="total-wagers">0.00</span>
+              </h4>
+              <p class="card-text">
+                <span class="text-muted">Total Wagers</span>
+              </p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">
+                <span class="balance">0.00</span>
+              </h4>
+              <p class="card-text">
+                <span class="text-muted">My Balance</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- bet table -->
+        <div class="card text-center" style="margin-top:20px;">
+                <table border=1 cellspacing=0 cellpadding=0 width=0 class="panel" class="table table-responsive" style='width:715.45pt;text-align:center;border-collapse:collapse;margin:20px auto;background-color:#FFF'>
+                    <tr style='height:58.95pt'>
+                      <td width=154 rowspan=4 style='width:115.8pt;text-align:center;height:58.95pt' class="option" onclick="betModal(BetOptions.Big)">
+                        <p style="font-size:12px;">ARE THE NOS 11TO17</p>
+                        <div style="font-size:20px;">1 WINS 1</div>
+                        <p style="font-size:12px;">LOSE IF ANY TRIPLE</p>
+                        <div style="font-size:44px;">BIG</div>
+                      </td>
+                      <td width=107 colspan=6 class="dices-triple option" onclick="betModal(BetOptions.Triple_1)">
+                        <div>
+                          <span class="dice-1"></span><br/><span class="dice-1"></span><span class="dice-1"></span>
+                        </div>
+                      </td>
+                      <td width=108 colspan=7 class="dices-triple option" onclick="betModal(BetOptions.Triple_2)">
+                        <div>
+                          <span class="dice-2"></span><br/><span class="dice-2"></span><span class="dice-2"></span>
+                        </div>
+                      </td>
+                      <td width=108 colspan=5 class="dices-triple option" onclick="betModal(BetOptions.Triple_3)">
+                        <div>
+                          <span class="dice-3"></span><br/><span class="dice-3"></span><span class="dice-3"></span>
+                        </div>
+                      </td>
+                      <td width=107 colspan=5 class="dices-triple option" onclick="betModal(BetOptions.Triple_4)">
+                        <div>
+                          <span class="dice-4"></span><br/><span class="dice-4"></span><span class="dice-4"></span>
+                        </div>
+                      </td>
+                      <td width=108 colspan=7 class="dices-triple option" onclick="betModal(BetOptions.Triple_5)">
+                        <div>
+                          <span class="dice-5"></span><br/><span class="dice-5"></span><span class="dice-5"></span>
+                        </div>
+                      </td>
+                      <td width=108 colspan=6 class="dices-triple option" onclick="betModal(BetOptions.Triple_6)">
+                        <div>
+                          <span class="dice-6"></span><br/><span class="dice-6"></span><span class="dice-6"></span>
+                        </div>
+                      </td>
+                      <td width=154 rowspan=4 style='width:115.85pt;height:58.95pt' class="option" onclick="betModal(BetOptions.Small)">
+                        <p style="font-size:12px;">ARE THE NOS 4TO10</p>
+                        <div style="font-size:20px;">1 WINS 1</div>
+                        <p style="font-size:12px;">LOSE IF ANY TRIPLE</p>                        
+                        <div style="font-size:44px;">SMALL</div>
+                      </td>
+                    </tr>
+                    <tr style='height:20.1pt'>
+                      <td width=645 colspan=36 style='width:483.8pt;height:20.1pt'>
+                        <div>IN THESE 6 SQUARES 1 WINS 180</div>
+                      </td>
+                    </tr>
+                    <tr style='height:77.15pt'>
+                      <td width=72 colspan=3 class="dices-double option" onclick="betModal(BetOptions.Double_2)">
+                        <div>
+                          <span class="dice-2"></span><br/><span class="dice-2"></span>
+                        </div>
+                      </td>
+                      <td width=72 colspan=6 class="dices-double option" onclick="betModal(BetOptions.Double_3)">
+                        <div>
+                          <span class="dice-3"></span><br/><span class="dice-3"></span>
+                        </div>
+                      </td>
+                      <td width=72 colspan=4 class="dices-double option" onclick="betModal(BetOptions.Double_5)">
+                        <div>
+                          <span class="dice-5"></span><br/><span class="dice-5"></span>
+                        </div>
+                      </td>
+                      <td width=215 colspan=10 rowspan=2 style='width:161.25pt;height:77.15pt' class="option" onclick="betModal(BetOptions.Triple)">
+                        <!-- <table style="text-align:center;width:100%;font-size:14pt;">
+                              <tr>
+                                <td><span class="dice-1"></span><br/><span class="dice-1"></span><span class="dice-1"></span></td>
+                                <td><span class="dice-2"></span><br/><span class="dice-2"></span><span class="dice-2"></span></td>
+                                <td><span class="dice-3"></span><br/><span class="dice-3"></span><span class="dice-3"></span></td>
+                              </tr>
+                              <tr>
+                                <td><span class="dice-4"></span><br/><span class="dice-4"></span><span class="dice-4"></span></td>
+                                <td><span class="dice-5"></span><br/><span class="dice-5"></span><span class="dice-5"></span></td>
+                                <td><span class="dice-6"></span><br/><span class="dice-6"></span><span class="dice-6"></span></td>
+                              </tr>
+                            </table> -->
+                        <div class="container" style="font-size:18px;">
+                          <div class="row">
+                            <div class="col">
+                              <span class="dice-1"></span><br/><span class="dice-1"></span><span class="dice-1"></span>
+                            </div>
+                            <div class="col">
+                              <span class="dice-2"></span><br/><span class="dice-2"></span><span class="dice-2"></span>
+                            </div>
+                            <div class="col">
+                              <span class="dice-3"></span><br/><span class="dice-3"></span><span class="dice-3"></span>
+                            </div>
+                          </div>
+                          <div style="margin-top:5px;"></div>
+                          <div class="row">
+                            <div class="col">
+                              <span class="dice-4"></span><br/><span class="dice-4"></span><span class="dice-4"></span>
+                            </div>
+                            <div class="col">
+                              <span class="dice-5"></span><br/><span class="dice-5"></span><span class="dice-5"></span>
+                            </div>
+                            <div class="col">
+                              <span class="dice-6"></span><br/><span class="dice-6"></span><span class="dice-6"></span>
+                            </div>
+                          </div>
+                        </div>
+                        <div style="font-size:9pt; margin-top:5px;">IN THIS SQUARE<br/>1 WINS 30</div>
+                      </td>
+                      <td width=72 colspan=4 class="dices-double option" onclick="betModal(BetOptions.Double_4)">
+                        <div>
+                          <span class="dice-4"></span><br/><span class="dice-4"></span>
+                        </div>
+                      </td>
+                      <td width=72 colspan=6 class="dices-double option" onclick="betModal(BetOptions.Double_1)">
+                        <div>
+                          <span class="dice-1"></span><br/><span class="dice-1"></span>
+                        </div>
+                      </td>
+                      <td width=72 colspan=3 class="dices-double option" onclick="betModal(BetOptions.Double_6)">
+                        <div>
+                          <span class="dice-6"></span><br/><span class="dice-6"></span>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr style='height:20.15pt'>
+                      <td width=215 colspan=13 style='width:161.25pt;height:20.15pt'>
+                        <div style="font-size: 11px">IN THESE 3SQUARES 1WINS10</div>
+                      </td>
+                      <td width=215 colspan=13 style='width:161.3pt;height:20.15pt'>
+                        <div style="font-size: 11px">IN THESE 3SQUARES 1WINS10</div>
+                      </td>
+                    </tr>
+                    <tr style='height:48.65pt'>
+                      <td width=154 rowspan=4 style='width:115.8pt;height:48.65pt' class="option" onclick="betModal(BetOptions.Odd)">
+                        <p style="font-size:12px;">BE AN ODD NUMBER</p>
+                        <div style="font-size:20px;">1 WINS 1</div>
+                        <p style="font-size:12px;">LOSE IF ANY TRIPLE</p>
+                        <div style="font-size:44px;">ODD</div>
+                      </td>
+                      <td width=46 colspan=2 valign=top class="dices-total option" onclick="betModal(BetOptions.Total_17)">
+                        <label>17</label>
+                        <div>1 wins<br/>60</div>
+                      </td>
+                      <td width=46 colspan=3 valign=top class="dices-total option" onclick="betModal(BetOptions.Total_16)">
+                        <label>16</label>
+                        <div>1 wins<br/>30</div>
+                      </td>
+                      <td width=46 colspan=3 valign=top class="dices-total option" onclick="betModal(BetOptions.Total_15)">
+                        <label>15</label>
+                        <div>1 wins<br/>18</div>
+                      </td>
+                      <td width=46 colspan=3 valign=top class="dices-total option" onclick="betModal(BetOptions.Total_14)">
+                        <label>14</label>
+                        <div>1 wins<br/>12</div>
+                      </td>
+                      <td width=46 colspan=3 valign=top class="dices-total option" onclick="betModal(BetOptions.Total_13)">
+                        <label>13</label>
+                        <div>1 wins<br/>8</div>
+                      </td>
+                      <td width=46 colspan=2 valign=top class="dices-total option" onclick="betModal(BetOptions.Total_12)">
+                        <label>12</label>
+                        <div>1 wins<br/>7</div>
+                      </td>
+                      <td width=46 colspan=2 valign=top class="dices-total option" onclick="betModal(BetOptions.Total_11)">
+                        <label>11</label>
+                        <div>1 wins<br/>6</div>
+                      </td>
+                      <td width=46 colspan=2 valign=top class="dices-total option" onclick="betModal(BetOptions.Total_10)">
+                        <label>10</label>
+                        <div>1 wins<br/>6</div>
+                      </td>
+                      <td width=46 colspan=2 valign=top class="dices-total option" onclick="betModal(BetOptions.Total_9)">
+                        <label>9</label>
+                        <div>1 wins<br/>7</div>
+                      </td>
+                      <td width=46 colspan=3 valign=top class="dices-total option" onclick="betModal(BetOptions.Total_8)">
+                        <label>8</label>
+                        <div>1 wins<br/>8</div>
+                      </td>
+                      <td width=46 colspan=3 valign=top class="dices-total option" onclick="betModal(BetOptions.Total_7)">
+                        <label>7</label>
+                        <div>1 wins<br/>12</div>
+                      </td>
+                      <td width=46 colspan=3 valign=top class="dices-total option" onclick="betModal(BetOptions.Total_6)">
+                        <label>6</label>
+                        <div>1 wins<br/>18</div>
+                      </td>
+                      <td width=46 colspan=3 valign=top class="dices-total option" onclick="betModal(BetOptions.Total_5)">
+                        <label>5</label>
+                        <div>1 wins<br/>30</div>
+                      </td>
+                      <td width=46 colspan=2 valign=top class="dices-total option" onclick="betModal(BetOptions.Total_4)">
+                        <label>4</label>
+                        <div>1 wins<br/>60</div>
+                      </td>
+                      <td width=154 rowspan=4 style='width:115.85pt;height:48.65pt' class="option" onclick="betModal(BetOptions.Even)">
+                        <p style="font-size:12px;">BE AN EVEN NUMBER</p>
+                        <div style="font-size:20px;">1 WINS 1</div>
+                        <p style="font-size:12px;">LOSE IF ANY TRIPLE</p>
+                        <div style="font-size:44px;">EVEN</div>
+                      </td>
+                    </tr>
+                    <tr style='height:48.65pt'>
+                      <td width=40 style='width:30.2pt;height:48.65pt;font-size:9pt;'>
+                        <div>1 wins 6</div>
+                      </td>
+                      <td width=40 colspan=3 class="dices-combo option" onclick="betModal(BetOptions.Combo_1_2)">
+                        <span class="dice-1"></span><br/><span class="dice-2"></span>
+                      </td>
+                      <td width=40 colspan=3 class="dices-combo option" onclick="betModal(BetOptions.Combo_2_4)">
+                        <span class="dice-2"></span><br/><span class="dice-4"></span>
+                      </td>
+                      <td width=40 colspan=3 class="dices-combo option" onclick="betModal(BetOptions.Combo_1_4)">
+                        <span class="dice-1"></span><br/><span class="dice-4"></span>
+                      </td>
+                      <td width=40 colspan=2 class="dices-combo option" onclick="betModal(BetOptions.Combo_2_3)">
+                        <span class="dice-2"></span><br/><span class="dice-3"></span>
+                      </td>
+                      <td width=40 colspan=3 class="dices-combo option" onclick="betModal(BetOptions.Combo_3_4)">
+                        <span class="dice-3"></span><br/><span class="dice-4"></span>
+                      </td>
+                      <td width=40 colspan=2 class="dices-combo option" onclick="betModal(BetOptions.Combo_2_5)">
+                        <span class="dice-2"></span><br/><span class="dice-5"></span>
+                      </td>
+                      <td width=40 class="dices-combo option" onclick="betModal(BetOptions.Combo_3_5)">
+                        <span class="dice-3"></span><br/><span class="dice-5"></span>
+                      </td>
+                      <td width=40 class="dices-combo option" onclick="betModal(BetOptions.Combo_2_6)">
+                        <span class="dice-2"></span><br/><span class="dice-6"></span>
+                      </td>
+                      <td width=40 colspan=2 class="dices-combo option" onclick="betModal(BetOptions.Combo_4_5)">
+                        <span class="dice-4"></span><br/><span class="dice-5"></span>
+                      </td>
+                      <td width=40 colspan=3 class="dices-combo option" onclick="betModal(BetOptions.Combo_3_6)">
+                        <span class="dice-3"></span><br/><span class="dice-6"></span>
+                      </td>
+                      <td width=40 colspan=2 class="dices-combo option" onclick="betModal(BetOptions.Combo_1_5)">
+                        <span class="dice-1"></span><br/><span class="dice-5"></span>
+                      </td>
+                      <td width=40 colspan=3 class="dices-combo option" onclick="betModal(BetOptions.Combo_1_6)">
+                        <span class="dice-1"></span><br/><span class="dice-6"></span>
+                      </td>
+                      <td width=40 colspan=3 class="dices-combo option" onclick="betModal(BetOptions.Combo_4_6)">
+                        <span class="dice-4"></span><br/><span class="dice-6"></span>
+                      </td>
+                      <td width=40 colspan=3 class="dices-combo option" onclick="betModal(BetOptions.Combo_5_6)">
+                        <span class="dice-5"></span><br/><span class="dice-6"></span>
+                      </td>
+                      <td width=40 class="dices-combo option" onclick="betModal(BetOptions.Combo_1_3)">
+                        <span class="dice-1"></span><br/><span class="dice-3"></span>
+                      </td>
+                    </tr>
+                    <tr style='height:63.05pt'>
+                      <td width=107 colspan=6 class="dices-single option" onclick="betModal(BetOptions.Single_1)">
+                        <span class="dice-1"></span>
+                      </td>
+                      <td width=108 colspan=7 class="dices-single option" onclick="betModal(BetOptions.Single_2)">
+                        <span class="dice-2"></span>
+                      </td>
+                      <td width=108 colspan=5 class="dices-single option" onclick="betModal(BetOptions.Single_3)">
+                        <span class="dice-3"></span>
+                      </td>
+                      <td width=107 colspan=5 class="dices-single option" onclick="betModal(BetOptions.Single_4)">
+                        <span class="dice-4"></span>
+                      </td>
+                      <td width=108 colspan=7 class="dices-single option" onclick="betModal(BetOptions.Single_5)">
+                        <span class="dice-5"></span>
+                      </td>
+                      <td width=108 colspan=6 class="dices-single option" onclick="betModal(BetOptions.Single_6)">
+                        <span class="dice-6"></span>
+                      </td>
+                    </tr>
+                    <tr style='height:14pt;font-size:9pt;'>
+                      <td colspan=36>1WINS1 ON ONE DIE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1WINS2 ON TWO DIE &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1WINS3 ON THREE DIE</td>
+                    </tr>
+                    <![if !supportMisalignedColumns]>
+                    <tr height=0>
+                      <td width=154 style='border:none'></td>
+                      <td width=40 style='border:none'></td>
+                      <td width=6 style='border:none'></td>
+                      <td width=26 style='border:none'></td>
+                      <td width=9 style='border:none'></td>
+                      <td width=12 style='border:none'></td>
+                      <td width=15 style='border:none'></td>
+                      <td width=13 style='border:none'></td>
+                      <td width=17 style='border:none'></td>
+                      <td width=5 style='border:none'></td>
+                      <td width=18 style='border:none'></td>
+                      <td width=23 style='border:none'></td>
+                      <td width=17 style='border:none'></td>
+                      <td width=13 style='border:none'></td>
+                      <td width=15 style='border:none'></td>
+                      <td width=12 style='border:none'></td>
+                      <td width=35 style='border:none'></td>
+                      <td width=6 style='border:none'></td>
+                      <td width=40 style='border:none'></td>
+                      <td width=40 style='border:none'></td>
+                      <td width=6 style='border:none'></td>
+                      <td width=35 style='border:none'></td>
+                      <td width=12 style='border:none'></td>
+                      <td width=15 style='border:none'></td>
+                      <td width=13 style='border:none'></td>
+                      <td width=17 style='border:none'></td>
+                      <td width=23 style='border:none'></td>
+                      <td width=18 style='border:none'></td>
+                      <td width=5 style='border:none'></td>
+                      <td width=17 style='border:none'></td>
+                      <td width=13 style='border:none'></td>
+                      <td width=15 style='border:none'></td>
+                      <td width=12 style='border:none'></td>
+                      <td width=9 style='border:none'></td>
+                      <td width=26 style='border:none'></td>
+                      <td width=6 style='border:none'></td>
+                      <td width=40 style='border:none'></td>
+                      <td width=154 style='border:none'></td>
+                    </tr>
+                    <![endif]>
+                  </table>
+        </div>
+        <!--my bets list-->
+        <div class="card" style="margin-top:20px;">
+          <div class="card-header"><h4>My Bets</h4></div>
+          <div class="card-body">
+              <table class="table table-hover table-responsive">
+                  <thead class="thead-default">
+                    <tr>
+                      <th>ID</th>
+                      <th>Option</th>
+                      <th>Amount</th>
+                      <th>Round</th>
+                      <th>Dices</th>
+                      <th>Profits</th>
+                    </tr>
+                  </thead>
+                  <tbody id="my-bets"></tbody>
+                </table>
+          </div>
+        </div>
+        <!--all bets list-->
+        <div class="card" style="margin-top:20px;">
+          <div class="card-header"><h4>All Bets</h4></div>
+          <div class="card-body">
+              <table class="table table-hover table-responsive">
+                  <thead class="thead-default">
+                    <tr>
+                      <th>ID</th>
+                      <th>Option</th>
+                      <th>Amount</th>
+                      <th>Round</th>
+                      <th>Dices</th>
+                      <th>Profits</th>
+                    </tr>
+                  </thead>
+                  <tbody id="all-bets"></tbody>
+                </table>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- tab invest-->
+      <div class="tab-pane fade" id="nav-invest" role="tabpanel" aria-labelledby="nav-invest-tab">
+        <div  class="card-deck">
+          <div class="card">
+            <div class="card-body">
+              <h3 class="card-title">
+                <span class="invest-price">0.00</span>
+                <small class="text-muted">bnb</small>
+              </h3>
+              <p class="card-text"><span class="text-muted">Invest Price</span></p>
+            </div>
+          </div>
+          <!-- <div class="card">
+            <div class="card-body">
+              <h3 class="card-title">
+                <span class="disinvest-price">0.00</span>
+                <small class="text-muted">bnb</small>
+              </h3>
+              <p class="card-text"><span class="text-muted">Disinvest Price</span></p>
+            </div>
+          </div> -->
+          <div class="card">
+            <div class="card-body">
+              <h3 class="card-title">
+                <span class="my-rights">0.00</span>
+                <small class="text-muted">sbd</small>
+              </h3>
+              <p class="card-text"><span class="text-muted">My Rights</span></p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <h3 class="card-title">
+                <span class="my-interests">0.00</span>
+                <small class="text-muted">bnb</small>
+              </h3>
+              <p class="card-text"><span class="text-muted">My Interests</span></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Invest History -->
+        <div class="card" style="margin-top:20px;">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-md-8"><h4>Invest History</h4></div>
+              <div class="col-md-4 text-right">
+                  <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#modal-invest">Invest</button>
+                  <button class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#modal-disinvest">Disinvest</button>
+                  <button class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#modal-approve">Approve</button>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <table class="table table-hover table-responsive">
+                  <thead class="thead-default">
+                    <tr>
+                      <th>Account</th>
+                      <th>SBD</th>
+                      <!-- <th>Ether</th> -->
+                      <th>BNB</th>
+                    </tr>
+                  </thead>
+                  <tbody id="my-invests"></tbody>
+                </table>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- tab whitepaper -->
+      <div class="tab-pane fade" id="nav-whitepaper" role="tabpanel" aria-labelledby="nav-whitepaper-tab">
+        <div class="card" style="max-width:800px;margin:0 auto;">
+        <article class="card-body">
+          <h1>Sic Bo Dice Gambling</h1>
+          <p><em>Keywords：Blockchain, Smart Contract, Gambling</em></p>
+          
+          <h3>Summary</h3>
+          <p>Sic Bo is a gambling game based on dice rolling. All the gamblers bet with the dealers. Sic Bo is a game in which the bankers always have the upper hand. Because the gamblers can never increase their chances to win by using any technical methods, in the long run, the dealers wins. Relative to the dealers’s long-term interests, the gamblers’ ten-time, even hundred-time, rewards gained by only one bet are rather attractive as well.</p>
+          <p>Different from the traditional gambling game where the casino plays dealer, Sic Bo uses the smart contract by BSC, which is a set of commitment in digital form. Player of Sic Bo can choose freely to be gamblers or dealers, or both at the same time.</p>
+          <p>Sic Bo betting contracts are fully open-source and viewable on the blockchain. All data is public, and viewable at bscscan.com. Smart contracts for BNB bets are fully automated and fair.</p>
+          
+          <h3>Bet Options</h3>
+          <table class="table table-bordered table-responsive" style="font-size: .875rem;">
+            <thead class="thead-default">
+              <tr>
+                <th>Options</th>
+                <th>Description</th>
+                <th>Odds</th>
+                <th>Chance</th>
+                <th>Edge</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Big</td>
+                <td>The total score will be from 11 to 17 (inclusive) with the exception of a triple</td>
+                <td style="white-space:nowrap">1 wins 1</td>
+                <td>48.61%</td>
+                <td>2.78%</td>
+              </tr>
+              <tr>
+                <td>Small</td>
+                <td>The total score will be from 4 to 10 (inclusive) with the exception of a triple</td>
+                <td style="white-space:nowrap">1 wins 1</td>
+                <td>48.61%</td>
+                <td>2.78%</td>
+              </tr>
+              <tr>
+                <td>Odd</td>
+                <td>The total score will be an odd number with the exception of a triple</td>
+                <td style="white-space:nowrap">1 wins 1</td>
+                <td>48.61%</td>
+                <td>2.78%</td>
+              </tr>
+              <tr>
+                <td>Even</td>
+                <td>The total score will be an even number with the exception of a triple</td>
+                <td style="white-space:nowrap">1 wins 1</td>
+                <td>48.61%</td>
+                <td>2.78%</td>
+              </tr>
+              <tr>
+                <td>Any Triple</td>
+                <td>Any of the triples will appear</td>
+                <td style="white-space:nowrap">1 wins 30</td>
+                <td>2.78%</td>
+                <td>13.89%</td>
+              </tr>
+              <tr>
+                <td>Specific Triples</td>
+                <td>A specific number will appear on all three dice</td>
+                <td style="white-space:nowrap">1 wins 180</td>
+                <td>0.463%</td>
+                <td>16.2%</td>
+              </tr>
+              <tr>
+                <td>Total 4 or 17</td>
+                <td>Three dice total 4 or 17</td>
+                <td style="white-space:nowrap">1 wins 60</td>
+                <td>1.4%</td>
+                <td>15.3%</td>
+              </tr>
+              <tr>
+                <td>Total 5 or 16</td>
+                <td>Three dice total 5 or 16</td>
+                <td style="white-space:nowrap">1 wins 30</td>
+                <td>2.8%</td>
+                <td>13.9%</td>
+              </tr>
+              <tr>
+                <td>Total 6 or 15</td>
+                <td>Three dice total 6 or 15</td>
+                <td style="white-space:nowrap">1 wins 18</td>
+                <td>4.6%</td>
+                <td>12%</td>
+              </tr>
+              <tr>
+                <td>Total 7 or 14</td>
+                <td>Three dice total 7 or 14</td>
+                <td style="white-space:nowrap">1 wins 12</td>
+                <td>6.9%</td>
+                <td>9.7%</td>
+              </tr>
+              <tr>
+                <td>Total 8 or 13</td>
+                <td>Three dice total 8 or 13</td>
+                <td style="white-space:nowrap">1 wins 8</td>
+                <td>9.7%</td>
+                <td>12.5%</td>
+              </tr>
+              <tr>
+                <td>Total 9 or 12</td>
+                <td>Three dice total 9 or 12</td>
+                <td style="white-space:nowrap">1 wins 7</td>
+                <td>11.6%</td>
+                <td>7.4%</td>
+              </tr>
+              <tr>
+                <td>Total 10 or 11</td>
+                <td>Three dice total 4 or 17</td>
+                <td style="white-space:nowrap">1 wins 6</td>
+                <td>12.5%</td>
+                <td>12.5%</td>
+              </tr>
+              <tr>
+                <td>Single Dice Apper Once</td>
+                <td>The specific number 1, 2, 3, 4, 5, or 6 will appear once</td>
+                <td style="white-space:nowrap">1 wins 1</td>
+                <td>34.72%</td>
+                <td>7.9%</td>
+              </tr>
+              <tr>
+                <td>Single Dice Apper Twice</td>
+                <td>The specific number 1, 2, 3, 4, 5, or 6 will appear twice</td>
+                <td style="white-space:nowrap">1 wins 2</td>
+                <td>6.94%</td>
+                <td>7.9%</td>
+              </tr>
+              <tr>
+                <td>Single Dice Apper Thrice</td>
+                <td>The specific number 1, 2, 3, 4, 5, or 6 will appear three times</td>
+                <td style="white-space:nowrap">1 wins 3</td>
+                <td>0.46%</td>
+                <td>7.9%</td>
+              </tr>
+              <tr>
+                <td>Specific Doubles</td>
+                <td>A specific number will appear on at least two of the three dice</td>
+                <td style="white-space:nowrap">1 wins 10</td>
+                <td>7.41%</td>
+                <td>18.5%</td>
+              </tr>
+              <tr>
+                <td>Dice Combinations</td>
+                <td>Two of the dice will show a specific combination of two different numbers</td>
+                <td style="white-space:nowrap">1 wins 6</td>
+                <td>13.9%</td>
+                <td>2.8%</td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <h3>Bet Method</h3>
+          <p>Use BNB to bet directly, use Sic Bo DAPP（<a id="link-dapp-bsc-mainnet-url" href="#" target="_blank">click me</a>） or other ways that can access smart contract to bet. Sic Bo Contract Address: <small class="text-muted" id="sicbo-address">0x19e7e376e7c213b7e7e7e46cc70a5dd086daff2a</small> at
+            <a id="link-sicbo-address" href="#" target="_blank">bscscan.com</a>. We recommend you use Chrome browser to install MetaMask plug-in. Then you can bet in browser directly. </p>
+          
+          <h3>Wins Payment</h3>
+          <p>The program will automatically do the liquidation work after the bet is taken. For the gamblers who lose, their BNB will become dealers’ profit; for the gamblers who win, the system will reward them according to preset odds. Liquidation time varies according to the size of BNB Smart chain, from 10 to 30 seconds.</p>
+          <p>If a gambler wins, the compensation according to the contract is at most 1% of the dealer’s account balance. For example, if the dealer has 5000 BNB, the gambler’s bet on any triple would rather not be higher than 1.667(5000x1%x3.33%) BNB, for he would not get more even if he take more bet.</p>
+          
+          <h3>Edge</h3>
+          <p>The dealers have different kind of advantages according to gamblers’ different bets. Take “triple” as an example. The odds are 1:30. The dealer has 13.89% edge. In other words, the expectation of gambler on each triple bet is -0.1389. The gambler loses 0.1389 on each 1 BNB bet. The expectation of dealer on each triple bet is 0.1389. The dealer gains 0.1389 on each 1 BNB bet.</p>
+          <p>The dealer’s edge is the dealer’s extra gain and the gain will increase as the number of gamblers increases.</p>
+          
+          <h3>Rights</h3>
+          <p>Although the expectation is above zero, the odds are high. The dealer must be wealthier than the gambler. Individual dealer may be weak in power, so Sic Bo has contract for dealer’s rights.</p>
+          <p>Dealer’s right is to distribute one dealer’s right to all the players who have the certificate of dealer’s rights. These players take turns to be dealer. In specific form, it is the SBD token players hold.Dealer’s rights varies between circulating rights and hold right.</p>
+          <h5 style="padding-left: 10px">Hold Rights</h5>
+          <p style="padding-left: 10px"><em>The rights by contract is hold rights. Hold rights is only for distribution and will not take part in dividend calculation when the dealer redeems his rights and interests.</em></p>
+          <h5 style="padding-left: 10px">Circulating Rights</h5>
+          <p style="padding-left: 10px"><em>The rights, which is not by contract, is circulating rights. Circulating rights can be traded for BNB at any time. Circulating rights circulate among players.</em></p>
+          <!-- <p>The upper limit for dealer’s rights is 21 million. It will not increase. </p> -->
+          <p>The upper limit for dealer’s rights is 21 million. It will not increase. </p>
+          
+          <h3>SBD Unit Price</h3>
+          <p>Unit price for dealer’s right is BNB and the price fluctuates. The fluctuation is not caused by buying and selling dealer’s right, for doing so will not cause price change. Gamblers take part in the game, which results in profit, causing the price for dealer’s right to change. In the long run, the money invested will get a profit at least 2.78%, because the dealer’s edge is 2.78%.</p>
+          <p>Of course, the profit might decrease, because the gamblers get lucky. You can try your luck by investing in SBD and roll the dice once or twice. The formula for calculating the dealer’s right is as below:</p>
+          <p style="text-align:center;"><img src="images/invest_price_formula.png" /></p>
+          <p>e is the BNB investors invest. d is the SBD investors hold. You can see from the formula, when profit=0, the price is constant.</p>
+          
+          <h3>Invest SBD</h3>
+          <p>Anyone can invest in the dealer’s rights and gain dividend according to the amount of deal’s rights he holds. When all the hold rights are distributed, you can gain your holding of SBD by buying from the trading market, finding a trustworthy seller or through the exchange office. SBD is a token under BSC BEP20 standard. The address for SBD token is: <small class="text-muted" id="drs-address">0x19e7e376e7c213b7e7e7e46cc70a5dd086daff2a</small> at
+            <a id="link-drs-address" href="#" target="_blank">bscscan.com</a>.</p>
+          <p>Player can trade for dealer’s right on Sic Bo Dapp, or transfer BNB into the contract and the contract will distribute SBD accordingly. Dealers can trade their SBD for BNB at any time. When you trade for BNB, the contract will deduct some SBD. The contract will ask for permission to deduct a small amount of SBD, just as credit card will ask for merchant’s permission. SBD is private property and its transfer needs permission. The fee for transferring SBD into BNB is 1%.</p>
+          
+          <!-- <h3>SBD Token Distribution</h3>
+          <ul>
+            <li>
+              100000000, 10%, <a id="link-erc20-address-development" href="#" target="_blank">the development team</a>, linear release in 5 years. 
+            </li>
+            <li>
+              100000000, 10%, <a id="link-erc20-address-foundation" href="#" target="_blank">the foundation</a>, linear release in 5 years. 
+            </li>
+            <li>
+              800000000, 80%, <a id="link-erc20-address-sicbo" href="#" target="_blank">the Sic Bo contract</a>. 
+              <ul>
+                <li>
+                  <a>300000000, 30%, the Sic Bo contract, already released. </a>
+                </li>
+                <li>
+                  <a>500000000, 50%, the Sic Bo contract, linear release in 5 years. </a>
+                </li>
+              </ul>
+            </li>
+          </ul> -->
+
+          <h3>SBD Token Distribution</h3>
+          <p>21000000, 100%, on <a id="link-erc20-address-sicbo" href="#" target="_blank">the Sic Bo contract</a>. </p>
+
+          <!-- <h3>DAPP</h3>
+          <ul>
+            <li>
+              <a id="link-dapp-bsc-mainnet-url" href="#" target="_blank">Dapp running on the Binance Smart Chain (BSC) mainnet. </a>
+            </li>
+            <li>
+              <a id="link-dapp-bsc-testnet-url" href="#" target="_blank">Dapp running on the Binance Smart Chain (BSC) testnet. </a>
+            </li>            
+          </ul> -->
+
+          <h3>Reference</h3>
+          <ul>
+            <li>
+              <a href="https://en.wikipedia.org/wiki/Sic_bo">https://en.wikipedia.org/wiki/Sic_bo</a>
+            </li>
+          </ul>
+
+          <h3>Contact us</h3>
+          <!-- <h6><a href="mailto:xxx@gmail.com">xxx@gmail.com</a></h6> -->
+          <ul>
+            <li>
+              <a href="https://discord.com/channels/1042843597873098833/1042843597873098836">discord</a>
+            </li>
+            <!-- <li>
+              <a href="mailto:xxx@gmail.com">xxx@gmail.com</a>
+            </li> -->
+          </ul>
+        </article>
+      </div>
+      </div>
+      <!-- <div class="tab-pane fade" id="nav-gamber-guide" role="tabpanel" aria-labelledby="nav-gamber-guide-tab">4</div> -->
+      <!-- <div class="tab-pane fade" id="nav-dealer-guide" role="tabpanel" aria-labelledby="nav-dealer-guide-tab">5</div> -->
+    </div>
+
+    <footer>
+      <div style="text-align:center;padding:10px;">
+        <span class="text-muted">SicBo &copy;2022.</span>
+      </div>
+    </footer>
+
+    <!--Contracts Modal -->
+    <div class="modal fade" id="modal-contracts" tabindex="-1" role="dialog" aria-labelledby="modal-contractsLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal-contractsLabel">Contracts</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <h4>SicBo Contract</h4>
+            <small class="text-muted" id="sicbo-address">0x19e7e376e7c213b7e7e7e46cc70a5dd086daff2a</small>
+            <!-- <p>Our SicBo betting contracts are fully open-source and viewable on the blockchain. All data is public, and viewable -->
+            <p>Our SicBo betting contracts are viewable on the blockchain. All data is public, and viewable
+              at
+              <a id="link-sicbo-address" href="#" target="_blank">bscscan.com</a>. Smart contracts for BNB bets are fully automated and fair.</p>
+            <h4>SicBo Dice Token</h4>
+            <small class="text-muted" id="drs-address">0x19e7e376e7c213b7e7e7e46cc70a5dd086daff2a</small>
+            <p>SicBo Dice(SBD) is a Token that who hold is one dealer, thus then dealer will share profit. As usually, it
+              is also contact viewable at
+              <a id="link-drs-address" href="#" target="_blank">bscscan.com</a>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Bet Modal -->
+    <div class="modal fade" id="modal-bet" tabindex="-1" role="dialog" aria-labelledby="modal-betLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal-betLabel">Bet</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Option: <span id="label-bet-option"></span></label>
+              <input type="hidden" class="form-control" id="input-bet-option" aria-describedby="emailHelp" readonly>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Amount</label>
+              <input type="number" step="0.0001" class="form-control" id="input-bet-amount" aria-describedby="emailHelp" placeholder="0.0000">
+              <small id="emailHelp" class="form-text text-muted">Please note that one percent of the pool's money is paid at most.</small>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button id="button-bet" type="button" class="btn btn-outline-primary">Bet</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!--Invest Modal -->
+    <div class="modal fade" id="modal-invest" tabindex="-1" role="dialog" aria-labelledby="modal-investLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal-investLabel">Invest</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+                <label for="input-invest-amount">BNB Amount</label>
+                <div class="input-group">
+                  <input type="number" step="0.00000000000001" class="form-control" id="input-invest-amount" aria-describedby="emailHelp" placeholder="0.0000">
+                  <span class="input-group-addon">bnb</span>
+                </div>
+                <small class="form-text text-muted">Your will get <span id="input-invest-hint">0</span> sbd.</small>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button  id="button-invest" type="button" class="btn btn-outline-primary">Invest</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!--Disinvest Modal -->
+    <div class="modal fade" id="modal-disinvest" tabindex="-1" role="dialog" aria-labelledby="modal-disinvestLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal-disinvestLabel">Disinvest</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <div class="form-group">
+                  <label for="input-disinvest-amount">SBD Amount</label>
+                  <div class="input-group">
+                    <input type="number" step="0.0001" class="form-control" id="input-disinvest-amount" aria-describedby="emailHelp" placeholder="0.0000">
+                    <span class="input-group-addon">sbd</span>
+                  </div>
+                  <small id="emailHelp" class="form-text text-muted">Your will get <span id="input-disinvest-hint">0</span> bnb.</small>
+                </div>
+          </div>
+          <div class="modal-footer">
+            <button id="button-disinvest" type="button" class="btn btn-outline-primary">Disinvest</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+        <!--approve Modal -->
+        <div class="modal fade" id="modal-approve" tabindex="-1" role="dialog" aria-labelledby="modal-approveLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="modal-approveLabel">Approve</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                  <div class="form-group">
+                      <label for="input-approve-amount">Can Transfer SBD Amount</label>
+                      <div class="input-group">
+                        <input type="number" step="0.0001" class="form-control" id="input-approve-amount" aria-describedby="emailHelp" placeholder="0.0000">
+                        <span class="input-group-addon">sbd</span>
+                      </div>
+                      <small id="emailHelp" class="form-text text-muted">Approve the upper limit of this Sicbo Contact to transfer your SBD.</small>
+                    </div>
+              </div>
+              <div class="modal-footer">
+                <button id="button-approve" type="button" class="btn btn-outline-primary">Approve</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--alert Modal -->
+        <div class="modal fade" id="modal-alert" tabindex="-1" role="dialog" aria-labelledby="modal-alertLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="modal-alertLabel">Alert</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>Can not find any Account,please use <a href="https://metamask.io/" target="_blank">MetaMask</a> or open this page in <a href="https://github.com/ethereum/mist/releases" target="_blank">Mist</a>.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+  </div>
+
+</body>
+
+</html>

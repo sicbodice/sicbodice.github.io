@@ -1,0 +1,46 @@
+@font-face {
+	font-family: 'icomoon';
+	src:url('fonts/icomoon.eot?yl7oxi');
+	src:url('fonts/icomoon.eot?#iefixyl7oxi') format('embedded-opentype'),
+		url('fonts/icomoon.ttf?yl7oxi') format('truetype'),
+		url('fonts/icomoon.woff?yl7oxi') format('woff'),
+		url('fonts/icomoon.svg?yl7oxi#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+	font-display: block;
+}
+
+[class^="dice-"], [class*=" dice-"] {
+	font-family: 'icomoon';
+	/* 黑点 */
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	font-display: block;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.dice-1:before {
+	content: "\e600";
+}
+.dice-2:before {
+	content: "\e601";
+}
+.dice-3:before {
+	content: "\e602";
+}
+.dice-4:before {
+	content: "\e603";
+}
+.dice-5:before {
+	content: "\e604";
+}
+.dice-6:before {
+	content: "\e605";
+}
